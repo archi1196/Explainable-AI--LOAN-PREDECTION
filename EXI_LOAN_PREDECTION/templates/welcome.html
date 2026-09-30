@@ -1,0 +1,42 @@
+
+{% extends "base.html" %}
+{% block title %}Welcome · LoanXAI{% endblock %}
+{% block content %}
+<section class="welcome wrap">
+  <div class="hero-card">
+    <div class="eyebrow">PBL-2 · PYTHON FOR DATA SCIENCE</div>
+    <h1>Explainable AI<br><span>for Loan Prediction</span></h1>
+    <p class="hero-sub">Making AI-based loan decisions easier to understand.</p>
+
+    <div class="explain-card">
+      <div class="mini-icon">✦</div>
+      <div>
+        <h3>What is Explainable AI?</h3>
+        <p>
+          Explainable AI (XAI) helps us understand <b>why</b> an AI model
+          predicts a loan as approved or rejected. It highlights the important
+          factors behind the prediction using SHAP.
+        </p>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div><strong>01</strong><span>Customer Details</span></div>
+      <i>→</i>
+      <div><strong>02</strong><span>AI Model</span></div>
+      <i>→</i>
+      <div><strong>03</strong><span>Prediction</span></div>
+      <i>→</i>
+      <div><strong>04</strong><span>Why?</span></div>
+    </div>
+
+    <a class="primary-btn big" href="{{ url_for('predict') }}">Get Started <span>→</span></a>
+
+    <div class="project-by">
+      <small>PROJECT BY</small>
+      <b>Archi Patel</b>
+      <span>C. K. Pithawala College of Engineering and Technology</span>
+    </div>
+  </div>
+</section>
+{% endblock %}

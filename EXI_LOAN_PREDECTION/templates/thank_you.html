@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block title %}Thank You · LoanXAI{% endblock %}
+{% block content %}
+<section class="wrap thank-page">
+  <div class="thank-card">
+    <div class="thank-icon">✓</div>
+    <div class="eyebrow">LOANXAI · PBL-2</div>
+    <h1>Thank You!</h1>
+    <p>Prediction tells us what. <b>XAI tells us why.</b></p>
+    <p class="muted">Explainable AI for Loan Prediction</p>
+    <div class="project-by">
+      <small>PROJECT BY</small>
+      <b>Archi Patel</b>
+      <span>C. K. Pithawala College of Engineering and Technology</span>
+    </div>
+    <a class="primary-btn" href="{{ url_for('welcome') }}">Back to Welcome</a>
+  </div>
+</section>
+{% endblock %}

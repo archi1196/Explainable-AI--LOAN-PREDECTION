@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+{% block title %}Loan Prediction · LoanXAI{% endblock %}
+{% block content %}
+<section class="wrap">
+  <a class="back" href="{{ url_for('welcome') }}">← Back to welcome</a>
+
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">PBL-2 · LOAN PREDICTION</div>
+      <h1>Loan Prediction</h1>
+      <h2>Explainable AI in Loan Prediction</h2>
+      <p>Enter the customer's details. The AI model will predict the loan outcome and explain the important factors behind it.</p>
+    </div>
+    <div class="xai-badge">✓ XAI Enabled</div>
+  </div>
+
+  {% if error %}
+  <div class="error"><b>Input check:</b> {{ error }}</div>
+  {% endif %}
+
+  <form method="post" class="card form-card">
+    <div class="section-title"><span>01</span><div><h2>Customer details</h2><p>Basic personal and contact information</p></div></div>
+    <div class="grid">
+      <label>Full Name *<input name="Full_Name" value="{{ values.get('Full_Name','') }}" required></label>
+      <label>Age *<input name="Age" type="number" min="18" max="100" value="{{ values.get('Age','') }}" required></label>
+      <label>Gender<select name="Gender"><option>Male</option><option>Female</option><option>Other</option></select></label>
+      <label>Phone Number *<input name="Phone" value="{{ values.get('Phone','') }}" required></label>
+      <label>Email<input type="email" name="Email" value="{{ values.get('Email','') }}"></label>
+      <label>City<input name="City" value="{{ values.get('City','') }}"></label>
+      <label class="wide">Address<textarea name="Address" rows="2">{{ values.get('Address','') }}</textarea></label>
+    </div>
+
+    <div class="section-title"><span>02</span><div><h2>Applicant information</h2><p>Information used by the prediction model</p></div></div>
+    <div class="grid">
+      <label>Dependents<input name="Dependents" type="number" min="0" max="10" value="{{ values.get('Dependents','2') }}" required></label>
+      <label>Education<select name="Education"><option value="1">Graduate</option><option value="0">Not Graduate</option></select></label>
+      <label>Employment Status<select name="Self_Employed"><option value="0">Salaried / Not self-employed</option><option value="1">Self-employed</option></select></label>
+      <label>Applicant Income (₹)<input name="Applicant_Income" type="number" min="1" value="{{ values.get('Applicant_Income','85000') }}" required></label>
+    </div>
+
+    <div class="section-title"><span>03</span><div><h2>Loan & financial information</h2><p>Values used by the trained AI model</p></div></div>
+    <div class="grid">
+      <label>Loan Amount (₹)<input name="Loan_Amount" type="number" min="1" value="{{ values.get('Loan_Amount','250000') }}" required></label>
+      <label>Loan Term
+        <div class="term-row">
+          <input name="Loan_Term_Value" type="number" min="1" value="{{ values.get('Loan_Term_Value','3') }}" required>
+          <select name="Loan_Term_Unit"><option value="years" {% if values.get('Loan_Term_Unit','years')=='years' %}selected{% endif %}>Years</option><option value="months" {% if values.get('Loan_Term_Unit')=='months' %}selected{% endif %}>Months</option></select>
+        </div>
+        <small>Example: 3 Years = 36 Months</small>
+      </label>
+      <label>CIBIL Score<input name="CIBIL_Score" type="number" min="300" max="900" value="{{ values.get('CIBIL_Score','720') }}" required><small>Range: 300–900</small></label>
+      <label>Residential Assets (₹)<input name="Residential_Assets" type="number" min="0" value="{{ values.get('Residential_Assets','300000') }}" required></label>
+      <label>Commercial Assets (₹)<input name="Commercial_Assets" type="number" min="0" value="{{ values.get('Commercial_Assets','100000') }}" required></label>
+      <label>Luxury Assets (₹)<input name="Luxury_Assets" type="number" min="0" value="{{ values.get('Luxury_Assets','80000') }}" required></label>
+      <label>Bank Assets (₹)<input name="Bank_Assets" type="number" min="0" value="{{ values.get('Bank_Assets','150000') }}" required></label>
+    </div>
+
+    <div class="submit-row">
+      <div><b>Prediction:</b> AI model → Approval / Rejection → SHAP explanation</div>
+      <button class="primary-btn" type="submit">Check Loan Approval <span>→</span></button>
+    </div>
+  </form>
+</section>
+{% endblock %}

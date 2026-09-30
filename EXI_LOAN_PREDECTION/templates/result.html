@@ -1,0 +1,93 @@
+
+{% extends "base.html" %}
+{% block title %}Prediction Result · LoanXAI{% endblock %}
+{% block content %}
+<section class="wrap result-page">
+  <div class="result-top">
+    <a class="back" href="{{ url_for('predict') }}">← Try Again</a>
+    <div class="eyebrow">AI PREDICTION RESULT</div>
+  </div>
+
+  {% if prediction == "Approved" %}
+  <div class="result-hero approved">
+    <div class="result-icon">✓</div>
+    <div><div class="result-label">LOAN APPROVED</div><h1>Your application is predicted to be approved.</h1>
+    <p>The model found enough positive factors for this applicant.</p></div>
+    <div class="prob">{{ probability }}%<small>approval probability</small></div>
+  </div>
+  {% else %}
+  <div class="result-hero rejected">
+    <div class="result-icon">×</div>
+    <div><div class="result-label">LOAN NOT APPROVED</div><h1>Your application is predicted to be rejected.</h1>
+    <p>The explanation below shows the main factors that contributed to this result.</p></div>
+    <div class="prob">{{ probability }}%<small>approval probability</small></div>
+  </div>
+  {% endif %}
+
+  <div class="two-col">
+    <div class="card">
+      <div class="section-title"><span>01</span><div><h2>Why this decision?</h2><p>SHAP explains the factors behind this individual prediction.</p></div></div>
+
+      <div class="reason-list">
+      {% for item in reasons %}
+        <div class="reason {{ item.direction }}">
+          <span>{{ "↑" if item.direction=="positive" else "↓" }}</span>
+          <div><b>{{ item.feature }}</b><small>{{ item.value }}</small></div>
+          <strong>{{ "+" if item.impact >= 0 else "" }}{{ "%.3f"|format(item.impact) }}</strong>
+        </div>
+      {% endfor %}
+      </div>
+
+      <h3 class="chart-title">SHAP contribution chart</h3>
+      <div class="bars">
+      {% for item in explanation %}
+        <div class="bar-row">
+          <span>{{ item.feature }}</span>
+          <div class="bar-track"><div class="bar {{ item.direction }}" style="width: {{ [((item.impact|abs / chart_max) * 100), 100]|min }}%"></div></div>
+          <b>{{ "+" if item.impact >= 0 else "" }}{{ "%.3f"|format(item.impact) }}</b>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <div class="card ratio-card">
+        <div class="section-title"><span>02</span><div><h2>Customer result ratio</h2><p>Predictions stored from completed applications</p></div></div>
+        <div class="ratio-circle" style="--approved: {{ counts.approved_pct }}%;"></div>
+        <div class="ratio-legend">
+          <span><i class="dot approved-dot"></i> Approved <b>{{ counts.approved }}</b></span>
+          <span><i class="dot rejected-dot"></i> Rejected <b>{{ counts.rejected }}</b></span>
+        </div>
+        <div class="ratio-total">{{ counts.total }}<small>Total applications</small></div>
+      </div>
+
+      {% if prediction == "Approved" %}
+      <div class="card documents">
+        <div class="section-title"><span>03</span><div><h2>You may apply for the loan</h2><p>Typical documents that may be requested by a lender.</p></div></div>
+        <ul>
+          <li>Identity proof</li>
+          <li>Address proof</li>
+          <li>Income / salary proof</li>
+          <li>Recent bank statements</li>
+          <li>Employment or business proof</li>
+          <li>Passport-size photographs</li>
+        </ul>
+        <p class="note">Document requirements can vary by lender and loan type.</p>
+      </div>
+      {% else %}
+      <div class="card rejected-note">
+        <div class="section-title"><span>03</span><div><h2>What can you improve?</h2><p>Review the negative factors shown in the SHAP explanation.</p></div></div>
+        <p>Try again with accurate applicant information. The system will create a fresh prediction; no previous form values are required.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="end-card">
+    <h2>{% if prediction == "Approved" %}Thank you!{% else %}Thank you for using LoanXAI.{% endif %}</h2>
+    <p>This is an educational PBL-2 demonstration of Explainable AI for Loan Prediction.</p>
+    <a class="secondary-btn" href="{{ url_for('predict') }}">Try Again</a>
+    <a class="text-link" href="{{ url_for('thank_you') }}">Finish</a>
+  </div>
+</section>
+{% endblock %}

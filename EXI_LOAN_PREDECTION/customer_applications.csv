@@ -1,0 +1,3 @@
+Full_Name,Age,Gender,Phone,Email,City,Address,Dependents,Education,Self_Employed,Applicant_Income,Loan_Amount,Loan_Term_Months,CIBIL_Score,Residential_Assets,Commercial_Assets,Luxury_Assets,Bank_Assets,Prediction,Probability
+Archi patel,20,Male,1234567890,abcdgdhedj1234@gmail.com,Suart,SUrat,0.0,1.0,0.0,85000.0,250000.0,36.0,720.0,300000.0,100000.0,80000.0,150000.0,Approved,84.46
+Archi patel,20,Male,1234567890,abcdgdhedj1234@gmail.com,Suart,"Surat, Gujrat",2.0,1.0,0.0,85000.0,250000.0,36.0,720.0,300000.0,100000.0,80000.0,150000.0,Approved,85.31
